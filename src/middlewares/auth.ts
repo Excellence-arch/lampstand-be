@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { decodeToken } from '../utils/tokens';
 
@@ -7,7 +7,7 @@ interface AuthenticatedRequest extends Request {
 }
 
 // Middleware to authenticate the token and optionally check role
-function auth(requiredRole?: string[]) {
+function auth(requiredRole?: string[]): RequestHandler {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
 

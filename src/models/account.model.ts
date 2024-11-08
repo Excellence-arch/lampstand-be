@@ -6,7 +6,7 @@ export enum AccountRole {
   USER = 'USER',
 }
 
-interface AccountDocument extends Document {
+export interface AccountDocument extends Document {
   name: string;
   role: AccountRole;
   _id: Schema.Types.ObjectId;
@@ -23,10 +23,10 @@ const AccountSchema = new Schema<AccountDocument>(
       type: String,
       enum: Object.values(AccountRole),
       required: true,
-      default: AccountRole.ADMIN,
+      default: AccountRole.USER,
     },
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { types: String, required: true },
     username: { type: String, unique: true, required: true },
   },
