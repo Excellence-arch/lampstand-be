@@ -1,15 +1,19 @@
 import { Schema } from 'mongoose';
+import { ContentType } from '../interfaces/post.interface';
 import { AccountDocument } from '../models/account.model';
 
-export enum ContentType {
-  ARTICLE = 'ARTICLE',
-  VIDEO = 'VIDEO',
-}
-
-export interface IPost {
+export const postResponse = ({
+  _id,
+  title,
+  body,
+  contentType,
+  user,
+}: {
   _id: Schema.Types.ObjectId;
   title: string;
   body: string;
   contentType: ContentType;
   user: AccountDocument;
-}
+}) => {
+  return { id: _id, title, body, contentType, user };
+};

@@ -7,13 +7,20 @@ export interface PostDocument extends Document {
   title: string;
   body: string;
   contentType: ContentType;
+  user: Schema.Types.ObjectId;
 }
 
 const postSchema = new Schema<PostDocument>({
   _id: { type: Schema.Types.ObjectId },
   title: { required: true, type: String },
   body: { required: true, type: String },
-  contentType: { required: true, enum: Object.values(ContentType), default: ContentType.ARTICLE, type: String },
+  contentType: {
+    required: true,
+    enum: Object.values(ContentType),
+    default: ContentType.ARTICLE,
+    type: String,
+  },
+  user: { type: Schema.Types.ObjectId, ref: 'Account' },
 });
 
 const Post = model<PostDocument>('Post', postSchema);
