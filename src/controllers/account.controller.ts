@@ -7,10 +7,7 @@ import {
 } from '../interfaces/response.interface';
 import { userData } from '../interfaces/user.interface';
 
-const register = async (
-  req: Request,
-  res: Response
-): Promise<Response<DefaultResponse>> => {
+const register = async (req: Request, res: Response) => {
   try {
     const { email, username, password, name } = req.body;
     const role: AccountRole = req.body.role;
@@ -22,20 +19,17 @@ const register = async (
       role: AccountRole[role],
     });
     await newUser.save();
-    return res.status(201).send({ message: `success` });
+    res.status(201).send({ message: `success` });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return res.status(400).send({ message: error.message });
+      res.status(400).send({ message: error.message });
     } else {
-      return res.status(500).send({ message: `Internal Server Error` });
+      res.status(500).send({ message: `Internal Server Error` });
     }
   }
 };
 
-const login = async (
-  req: Request,
-  res: Response
-): Promise<Response<LoginResponse> | undefined> => {
+const login = async (req: Request, res: Response) => {
   try {
     const password = req.body.password;
     const username = req.body.username!;
@@ -44,47 +38,44 @@ const login = async (
     if (username) {
       account = await Account.findOne({ username });
       if (!account) {
-        return res.status(400).send({ message: `Username does not exist` });
+        res.status(400).send({ message: `Username does not exist` });
       }
     } else if (email) {
       account = await Account.findOne({ email });
       if (!account) {
-        return res.status(400).send({ message: `Email does not exist` });
+        res.status(400).send({ message: `Email does not exist` });
       }
     }
     if (account!!) {
       const isMatch = await account?.comparePassword(password);
       if (isMatch) {
         const token = generateToken(account?._id, account?.role);
-        return res.status(200).send({ message: `success`, token });
+        res.status(200).send({ message: `success`, token });
       } else {
-        return res.status(400).send({ message: `Incorrect password` });
+        res.status(400).send({ message: `Incorrect password` });
       }
     }
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).send({ message: error.message });
+      res.status(400).send({ message: error.message });
     } else {
-      return res.status(500).send({ message: `Internal Server Error` });
+      res.status(500).send({ message: `Internal Server Error` });
     }
   }
 };
 
-const getProfile = async (
-  req: Request,
-  res: Response
-): Promise<Response<{ message: string; user: userData }>> => {
+const getProfile = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user: userData | null = await Account.findById(id).select(
       '-password'
     );
-    return res.status(200).send({ message: `success`, user });
+    res.status(200).send({ message: `success`, user });
   } catch (error) {
     if (error instanceof Error) {
-      return res.status(400).send({ message: error.message });
+      res.status(400).send({ message: error.message });
     } else {
-      return res.status(500).send({ message: `Internal Server Error` });
+      res.status(500).send({ message: `Internal Server Error` });
     }
   }
 };
