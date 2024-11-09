@@ -69,7 +69,7 @@ export interface CustomRequest extends Request {
 }
 
 // Middleware to authenticate user via JWT and optionally check roles
-const auth = (allowedRoles?: string[]) => {
+const auth = (allowedRoles?: AccountRole[]) => {
   return (req: CustomRequest, res: Response, next: NextFunction) => {
     // Get the token from the authorization header
     const authHeader = req.headers.authorization;
