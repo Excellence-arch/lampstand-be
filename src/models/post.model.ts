@@ -1,6 +1,7 @@
 import { Document, Schema } from 'mongoose';
-import { ContentType } from '../interfaces/post.interface';
+import { ContentType, ILike } from '../interfaces/post.interface';
 import { model } from 'mongoose';
+import { likeSchema } from './comment.model';
 
 export interface PostDocument extends Document {
   _id: Schema.Types.ObjectId;
@@ -8,6 +9,8 @@ export interface PostDocument extends Document {
   body: string;
   contentType: ContentType;
   user: Schema.Types.ObjectId;
+  comments: Schema.Types.ObjectId;
+  likes: ILike[];
 }
 
 const postSchema = new Schema<PostDocument>({
@@ -21,6 +24,8 @@ const postSchema = new Schema<PostDocument>({
     type: String,
   },
   user: { type: Schema.Types.ObjectId, ref: 'Account' },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  likes: [likeSchema],
 });
 
 const Post = model<PostDocument>('Post', postSchema);

@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import Post from '../models/post.model';
 import { postResponse } from '../utils/responses';
-import { ContentType, IPost } from '../interfaces/post.interface';
-import { Schema } from 'mongoose';
-import { AccountDocument } from '../models/account.model';
-import { userData } from '../interfaces/user.interface';
+import {
+  ContentType,
+  IComment,
+  ILike,
+  IPost,
+  IPostDoc,
+} from '../interfaces/post.interface';
+import { IRequest } from '../interfaces/response.interface';
 
 const getPosts = async (req: Request, res: Response) => {
   try {
-    const posts: {
-      _id: Schema.Types.ObjectId;
-      title: string;
-      body: string;
-      contentType: ContentType;
-      user: any;
-    }[] = await Post.find().populate('user');
+    const posts: IPostDoc[] = await Post.find()
+      .populate('user likes')
+      .select('-user.password');
     const resp: IPost[] = [];
     for (const post of posts) {
       resp.push(postResponse({ ...post }));
@@ -33,13 +33,9 @@ const getPosts = async (req: Request, res: Response) => {
 const getPostById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const post: {
-      _id: Schema.Types.ObjectId;
-      title: string;
-      body: string;
-      contentType: ContentType;
-      user: any;
-    } | null = await Post.findById(id).populate('user')!;
+    const post: IPostDoc | null = await Post.findById(id)
+      .populate('user likes')
+      .select('-user.password')!;
     if (post) {
       const resp: IPost = postResponse({ ...post });
       res.status(200).send({ message: 'success', data: resp });
@@ -55,13 +51,14 @@ const getPostById = async (req: Request, res: Response) => {
   }
 };
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: IRequest, res: Response) => {
   try {
     const { title, body, contentType } = req.body;
     const newPost = new Post({
       title,
       body,
       contentType,
+      user: req.user.userId,
     });
     newPost.save();
     res.status(201).send({ message: 'success' });
