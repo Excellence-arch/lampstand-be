@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
 import { ContentType } from '../interfaces/post.interface';
 import { AccountDocument } from '../models/account.model';
+import { userData } from '../interfaces/user.interface';
 
 export const postResponse = ({
   _id,
@@ -13,7 +14,7 @@ export const postResponse = ({
   title: string;
   body: string;
   contentType: ContentType;
-  user: AccountDocument;
+  user: userData;
 }) => {
   return { id: _id, title, body, contentType, user };
 };

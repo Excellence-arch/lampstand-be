@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose';
 import { AccountDocument } from '../models/account.model';
+import { userData } from './user.interface';
 
 export enum ContentType {
   ARTICLE = 'ARTICLE',
@@ -7,9 +8,9 @@ export enum ContentType {
 }
 
 export interface IPost {
-  _id: Schema.Types.ObjectId;
+  id: Schema.Types.ObjectId;
   title: string;
   body: string;
   contentType: ContentType;
-  user: AccountDocument;
+  user: userData;
 }
