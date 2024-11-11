@@ -28,7 +28,6 @@ export interface IPostDoc {
 }
 
 export interface ILike {
-  _id: Schema.Types.ObjectId;
   user: userData;
   post: Schema.Types.ObjectId;
 }

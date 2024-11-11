@@ -57,13 +57,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { decodeToken } from '../utils/tokens';
 import { AccountRole } from '../models/account.model';
+import { Schema } from 'mongoose';
 
 // Secret key used for signing the JWT
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 export interface CustomRequest extends Request {
   user?: {
-    userId: string;
+    userId: Schema.Types.ObjectId;
     role: AccountRole;
   };
 }
@@ -86,7 +87,8 @@ const auth = (allowedRoles?: AccountRole[]) => {
 
     try {
       // Verify the token
-      const decoded: { userId: string; role: AccountRole } = decodeToken(token);
+      const decoded: { userId: Schema.Types.ObjectId; role: AccountRole } =
+        decodeToken(token);
       // Attach user information to the request object
       req.user = decoded;
 

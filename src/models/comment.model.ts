@@ -2,14 +2,12 @@ import { Document, Schema } from 'mongoose';
 import { model } from 'mongoose';
 
 export interface LikeDocument extends Document {
-  _id: Schema.Types.ObjectId;
   user: Schema.Types.ObjectId;
   // comment: Schema.Types.ObjectId;
   post: Schema.Types.ObjectId;
 }
 
 export const likeSchema = new Schema<LikeDocument>({
-  _id: { type: Schema.Types.ObjectId },
   post: { type: Schema.Types.ObjectId, ref: 'Post' },
   // comment: { type: Schema.Types.ObjectId, ref: 'Comment' },
   user: { type: Schema.Types.ObjectId, ref: 'Account', unique: true },
