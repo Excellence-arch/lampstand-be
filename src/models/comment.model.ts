@@ -21,13 +21,16 @@ export interface CommentDocument extends Document {
   post: Schema.Types.ObjectId;
 }
 
-const commentSchema = new Schema<CommentDocument>({
-  _id: { type: Schema.Types.ObjectId },
-  body: { required: true, type: String },
-  like: [likeSchema],
-  user: { type: Schema.Types.ObjectId, ref: 'Account' },
-  post: { type: Schema.Types.ObjectId, ref: 'Post' },
-});
+const commentSchema = new Schema<CommentDocument>(
+  {
+    _id: { type: Schema.Types.ObjectId },
+    body: { required: true, type: String },
+    like: [likeSchema],
+    user: { type: Schema.Types.ObjectId, ref: 'Account' },
+    post: { type: Schema.Types.ObjectId, ref: 'Post' },
+  },
+  { timestamps: true }
+);
 
 const Comment = model<CommentDocument>('Comment', commentSchema);
 

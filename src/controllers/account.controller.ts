@@ -6,15 +6,16 @@ import {
   LoginResponse,
 } from '../interfaces/response.interface';
 import { userData } from '../interfaces/user.interface';
+import { CustomRequest } from '../middlewares/auth';
 
 const register = async (req: Request, res: Response) => {
   try {
-    const { email, username, password, name } = req.body;
+    const { email, password, name } = req.body;
     const role: AccountRole = req.body.role;
     const newUser: AccountDocument = new Account({
       email,
-      username,
       password,
+      username: `${name.split('')[0]} ${Date.now}`,
       name,
       role: AccountRole[role],
     });
@@ -64,9 +65,9 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const getProfile = async (req: Request, res: Response) => {
+const getProfile = async (req: CustomRequest, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = req.user?.userId;
     const user: userData | null = await Account.findById(id).select(
       '-password'
     );

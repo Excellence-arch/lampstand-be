@@ -13,20 +13,23 @@ export interface PostDocument extends Document {
   likes: LikeDocument[];
 }
 
-const postSchema = new Schema<PostDocument>({
-  _id: { type: Schema.Types.ObjectId },
-  title: { required: true, type: String },
-  body: { required: true, type: String },
-  contentType: {
-    required: true,
-    enum: Object.values(ContentType),
-    default: ContentType.ARTICLE,
-    type: String,
+const postSchema = new Schema<PostDocument>(
+  {
+    _id: { type: Schema.Types.ObjectId },
+    title: { required: true, type: String },
+    body: { required: true, type: String },
+    contentType: {
+      required: true,
+      enum: Object.values(ContentType),
+      default: ContentType.ARTICLE,
+      type: String,
+    },
+    user: { type: Schema.Types.ObjectId, ref: 'Account' },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    likes: [likeSchema],
   },
-  user: { type: Schema.Types.ObjectId, ref: 'Account' },
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-  likes: [likeSchema],
-});
+  { timestamps: true }
+);
 
 const Post = model<PostDocument>('Post', postSchema);
 

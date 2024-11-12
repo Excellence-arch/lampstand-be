@@ -15,6 +15,7 @@ export interface AccountDocument extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
   username: string;
   verified: boolean;
+  avatar: string;
 }
 
 const AccountSchema = new Schema<AccountDocument>(
@@ -29,8 +30,9 @@ const AccountSchema = new Schema<AccountDocument>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { types: String, required: true },
-    username: { type: String, unique: true, required: true },
+    username: { type: String, unique: true },
     verified: { type: Boolean, default: false },
+    avatar: { type: String, default: '' },
   },
   { timestamps: true }
 );

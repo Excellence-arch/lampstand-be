@@ -7,20 +7,38 @@ import {
   ILike,
   IPost,
   IPostDoc,
+  IPostFull,
 } from '../interfaces/post.interface';
 import { IRequest } from '../interfaces/response.interface';
+import { CustomRequest } from '../middlewares/auth';
 
 const getPosts = async (req: Request, res: Response) => {
   try {
     const posts: IPostDoc[] = await Post.find()
       .populate('user likes')
-      .select('-user.password');
+      .select('-user.password -role');
     const resp: IPost[] = [];
     for (const post of posts) {
       resp.push(postResponse({ ...post }));
     }
 
     res.status(200).send({ message: 'success', data: resp });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: `Internal Server Error` });
+    }
+  }
+};
+
+const getUserPosts = async (req: IRequest, res: Response) => {
+  try {
+    const userId = req.user.userId;
+    const posts: IPostFull[] = await Post.find({ user: userId })
+      .populate('likes comments')
+      .select('-user.password');
+    res.status(200).send({ message: 'success', data: posts });
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send({ message: error.message });
@@ -71,4 +89,4 @@ const createPost = async (req: IRequest, res: Response) => {
   }
 };
 
-export { getPosts, getPostById, createPost };
+export { getPosts, getPostById, createPost, getUserPosts };

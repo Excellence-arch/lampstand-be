@@ -27,6 +27,16 @@ export interface IPostDoc {
   comments: Schema.Types.ObjectId[];
 }
 
+export interface IPostFull {
+  _id: Schema.Types.ObjectId;
+  title: string;
+  body: string;
+  contentType: ContentType;
+  user: userData;
+  likes: ILike[];
+  comments: IComment[];
+}
+
 export interface ILike {
   user: userData;
   post: Schema.Types.ObjectId;

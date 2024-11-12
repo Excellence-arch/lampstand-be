@@ -4,6 +4,7 @@ import {
   createPost,
   getPostById,
   getPosts,
+  getUserPosts,
 } from '../controllers/post.controller';
 import { AccountRole } from '../models/account.model';
 import {
@@ -17,6 +18,7 @@ import { IRequest } from '../interfaces/response.interface';
 const router = express.Router();
 
 router.get('/', auth(), getPosts);
+router.get('/user', auth(), (req, res) => getUserPosts(req as IRequest, res));
 router.get('/:id', auth(), getPostById);
 router.post('/create-post', auth([AccountRole.USER]), (req, res) =>
   createPost(req as IRequest, res)
