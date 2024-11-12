@@ -1,11 +1,11 @@
 {
   "name": "lampstand-be",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "start": "node src/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
