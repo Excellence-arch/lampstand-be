@@ -1,7 +1,7 @@
 {
   "name": "lampstand-be",
   "version": "1.0.0",
-  "main": "dist/src/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
