@@ -34,6 +34,20 @@ const makeComment = async (req: IRequest, res: Response) => {
   }
 };
 
+const deleteComment = async (req: Request, res: Response) => {
+  try {
+    const { _id } = req.params;
+    await Comment.findByIdAndDelete(_id);
+    res.status(201).send({ message: `success` });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: `Internal Server Error` });
+    }
+  }
+};
+
 const likePost = async (req: IRequest, res: Response) => {
   try {
     const postId: Schema.Types.ObjectId = req.body.postId!;
@@ -73,4 +87,4 @@ const unlikePost = async (req: IRequest, res: Response) => {
   }
 };
 
-export { getCommentById, makeComment, likePost };
+export { getCommentById, makeComment, likePost, unlikePost, deleteComment };

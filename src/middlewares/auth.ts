@@ -16,7 +16,7 @@ export interface IUser {
 }
 
 // Middleware to authenticate user via JWT and optionally check roles
-const auth = async (allowedRoles?: AccountRole[]) => {
+const auth = (allowedRoles?: AccountRole[]) => {
   return async (req: CustomRequest, res: Response, next: NextFunction) => {
     // Get the token from the authorization header
     const authHeader = req.headers.authorization;
