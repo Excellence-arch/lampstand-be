@@ -20,7 +20,6 @@ export interface AccountDocument extends Document {
 
 const AccountSchema = new Schema<AccountDocument>(
   {
-    _id: { type: Schema.Types.ObjectId },
     role: {
       type: String,
       enum: Object.values(AccountRole),
@@ -29,10 +28,10 @@ const AccountSchema = new Schema<AccountDocument>(
     },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { types: String, required: true },
-    username: { type: String, unique: true },
-    verified: { type: Boolean, default: false },
-    avatar: { type: String, default: '' },
+    password: { type: String, required: true },
+    username: { type: String },
+    verified: { type: Boolean, default: false, required: false },
+    avatar: { type: String, default: 'hey', required: false },
   },
   { timestamps: true }
 );

@@ -15,7 +15,7 @@ const register = async (req: Request, res: Response) => {
     const newUser: AccountDocument = new Account({
       email,
       password,
-      username: `${name.split('')[0]} ${Date.now}`,
+      username: name,
       name,
       role: AccountRole[role],
     });

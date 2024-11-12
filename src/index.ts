@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import env from './config/env';
 import connectDB from './config/db';
+import router from './routes';
 dotenv.config();
 
 const app: Application = express();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(bodyParser.json({ limit: '50mb' }));
+app.use("/api", router)
 
 connectDB();
 

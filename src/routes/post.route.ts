@@ -15,21 +15,21 @@ import {
 } from '../controllers/comment.controller';
 import { IRequest } from '../interfaces/response.interface';
 
-const router = express.Router();
+const postRouter = express.Router();
 
-router.get('/', auth(), getPosts);
-router.get('/user', auth(), (req, res) => getUserPosts(req as IRequest, res));
-router.get('/:id', auth(), getPostById);
-router.post('/create-post', auth([AccountRole.USER]), (req, res) =>
+postRouter.get('/', auth(), getPosts);
+postRouter.get('/user', auth(), (req, res) => getUserPosts(req as IRequest, res));
+postRouter.get('/:id', auth(), getPostById);
+postRouter.post('/create-post', auth([AccountRole.USER]), (req, res) =>
   createPost(req as IRequest, res)
 );
-router.post('/like-post', auth(), (req, res) => likePost(req as IRequest, res));
-router.post('/unlike-post', auth(), (req, res) =>
+postRouter.post('/like-post', auth(), (req, res) => likePost(req as IRequest, res));
+postRouter.post('/unlike-post', auth(), (req, res) =>
   unlikePost(req as IRequest, res)
 );
-router.post('/comment', auth(), (req, res) =>
+postRouter.post('/comment', auth(), (req, res) =>
   makeComment(req as IRequest, res)
 );
-router.delete('/delete-comment', auth(), deleteComment);
+postRouter.delete('/delete-comment', auth(), deleteComment);
 
-export default router;
+export  { postRouter };
