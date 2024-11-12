@@ -60,7 +60,7 @@ const createPost = async (req: IRequest, res: Response) => {
       contentType,
       user: req.user.userId,
     });
-    newPost.save();
+    await newPost.save();
     res.status(201).send({ message: 'success' });
   } catch (error) {
     if (error instanceof Error) {

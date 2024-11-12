@@ -55,7 +55,7 @@ const likePost = async (req: IRequest, res: Response) => {
     const post: PostDocument | null = await Post.findById(postId);
     if (post) {
       post?.likes.push({ user: userId, post: postId });
-      post.save();
+      await post.save();
     }
     res.status(201).send({ message: `success` });
   } catch (error) {
@@ -75,7 +75,7 @@ const unlikePost = async (req: IRequest, res: Response) => {
     if (post) {
       const allLikes = post?.likes.filter((like, _) => like.user !== userId);
       post.likes = allLikes;
-      post.save();
+      await post.save();
     }
     res.status(201).send({ message: `success` });
   } catch (error) {

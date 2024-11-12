@@ -35,7 +35,7 @@ const auth = (allowedRoles?: AccountRole[]) => {
       // Verify the token
       const decoded: IUser = await decodeToken(token);
       // Attach user information to the request object
-      req.user = decoded;
+      (req as CustomRequest).user = decoded;
 
       // If roles are specified, check if the user's role is allowed
       if (allowedRoles && !allowedRoles.includes(decoded.role)) {
