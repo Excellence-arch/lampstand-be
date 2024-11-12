@@ -1,7 +1,7 @@
 import { Document, Schema } from 'mongoose';
 import { model } from 'mongoose';
 
-export interface LikeDocument extends Document {
+export interface LikeDocument {
   user: Schema.Types.ObjectId;
   // comment: Schema.Types.ObjectId;
   post: Schema.Types.ObjectId;

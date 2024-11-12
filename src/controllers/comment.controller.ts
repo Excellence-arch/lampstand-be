@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Comment from '../models/comment.model';
 import { IRequest } from '../interfaces/response.interface';
 import Post, { PostDocument } from '../models/post.model';
+import { Schema } from 'mongoose';
 
 const getCommentById = async (req: Request, res: Response) => {
   try {
@@ -33,14 +34,14 @@ const makeComment = async (req: IRequest, res: Response) => {
   }
 };
 
-const likePost = async (req: IRequest, res: Response) {
+const likePost = async (req: IRequest, res: Response) => {
   try {
-    const { postId } = req.body;
-    const {userId} = req.user;
-    const post: PostDocument | null= await Post.findById(postId);
-    if(post) {
-post?.likes.push({user: userId, post: postId});
-    post.save();
+    const postId: Schema.Types.ObjectId = req.body.postId!;
+    const userId: Schema.Types.ObjectId = req.user.userId!;
+    const post: PostDocument | null = await Post.findById(postId);
+    if (post) {
+      post?.likes.push({ user: userId, post: postId });
+      post.save();
     }
     res.status(201).send({ message: `success` });
   } catch (error) {
@@ -50,6 +51,6 @@ post?.likes.push({user: userId, post: postId});
       res.status(500).send({ message: `Internal Server Error` });
     }
   }
-}
+};
 
-export { getCommentById, makeComment };
+export { getCommentById, makeComment, likePost };
