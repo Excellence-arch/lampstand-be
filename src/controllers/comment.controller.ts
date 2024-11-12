@@ -53,4 +53,24 @@ const likePost = async (req: IRequest, res: Response) => {
   }
 };
 
+const unlikePost = async (req: IRequest, res: Response) => {
+  try {
+    const postId: Schema.Types.ObjectId = req.body.postId!;
+    const userId: Schema.Types.ObjectId = req.user.userId!;
+    const post: PostDocument | null = await Post.findById(postId);
+    if (post) {
+      const allLikes = post?.likes.filter((like, _) => like.user !== userId);
+      post.likes = allLikes;
+      post.save();
+    }
+    res.status(201).send({ message: `success` });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: `Internal Server Error` });
+    }
+  }
+};
+
 export { getCommentById, makeComment, likePost };
