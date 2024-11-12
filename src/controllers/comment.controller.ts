@@ -54,8 +54,13 @@ const likePost = async (req: IRequest, res: Response) => {
     const userId: Schema.Types.ObjectId = req.user.userId!;
     const post: PostDocument | null = await Post.findById(postId);
     if (post) {
-      post?.likes.push({ user: userId, post: postId });
-      await post.save();
+      const alreadyLiked = post.likes.some((like) => like.user === userId);
+      if (alreadyLiked) {
+        res.status(400).send({ message: `Post already liked` });
+      } else {
+        post.likes.push({ user: userId, post: postId });
+        await post.save();
+      }
     }
     res.status(201).send({ message: `success` });
   } catch (error) {
