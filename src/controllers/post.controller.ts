@@ -16,12 +16,22 @@ const getPosts = async (req: Request, res: Response) => {
     const posts: IPostDoc[] = await Post.find()
       .populate('user likes')
       .select('-user.password -role');
-    const resp: IPost[] = [];
-    for (const post of posts) {
-      resp.push(postResponse({ ...post }));
-    }
+    // const resp: IPost[] = [];
+    // for (const post of posts) {
+    //   resp.push(
+    //     postResponse({
+    //       _id: post._id,
+    //       title: post.title,
+    //       body: post.body,
+    //       contentType: post.contentType,
+    //       user: post.user,
+    //       likes: post.likes,
+    //       comments: post.comments,
+    //     })
+    //   );
+    // }
 
-    res.status(200).send({ message: 'success', posts: resp });
+    res.status(200).send({ message: 'success', posts });
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send({ message: error.message });
@@ -54,8 +64,8 @@ const getPostById = async (req: Request, res: Response) => {
       .populate('user likes')
       .select('-user.password')!;
     if (post) {
-      const resp: IPost = postResponse({ ...post });
-      res.status(200).send({ message: 'success', data: resp });
+      // const resp: IPost = postResponse({ ...post });
+      res.status(200).send({ message: 'success', data: post });
     } else {
       res.status(401).send({ message: `Post not found` });
     }
