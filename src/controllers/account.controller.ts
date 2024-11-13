@@ -1,10 +1,6 @@
 import { Request, Response } from 'express';
 import Account, { AccountDocument, AccountRole } from '../models/account.model';
 import { generateToken } from '../utils/tokens';
-import {
-  DefaultResponse,
-  LoginResponse,
-} from '../interfaces/response.interface';
 import { userData } from '../interfaces/user.interface';
 import { CustomRequest } from '../middlewares/auth';
 

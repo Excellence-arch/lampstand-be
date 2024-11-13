@@ -6,6 +6,7 @@ export interface userData {
   username: string;
   email: string;
   role: AccountRole;
+  active: boolean;
 }
 
 export interface IUserData {
@@ -15,4 +16,5 @@ export interface IUserData {
   email: string;
   role: AccountRole;
   password: string;
+  active: boolean;
 }

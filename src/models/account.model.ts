@@ -16,6 +16,7 @@ export interface AccountDocument extends Document {
   username: string;
   verified: boolean;
   avatar: string;
+  active: boolean;
 }
 
 const AccountSchema = new Schema<AccountDocument>(
@@ -29,9 +30,10 @@ const AccountSchema = new Schema<AccountDocument>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    username: { type: String },
+    username: { type: String, unique: false },
     verified: { type: Boolean, default: false, required: false },
     avatar: { type: String, default: 'hey', required: false },
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
