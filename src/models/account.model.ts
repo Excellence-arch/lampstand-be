@@ -35,7 +35,7 @@ const AccountSchema = new Schema<AccountDocument>(
     avatar: {
       type: String,
       default:
-        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fdefault-avatar&psig=AOvVaw2YzInNXECqLHH5s78nJbjy&ust=1731618387889000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLjo26qb2okDFQAAAAAdAAAAABAE',
+        'https://static.vecteezy.com/system/resources/previews/001/840/618/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg',
       required: false,
     },
     active: { type: Boolean, default: true },
