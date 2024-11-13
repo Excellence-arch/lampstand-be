@@ -22,7 +22,7 @@ const getPosts = async (req: Request, res: Response) => {
       resp.push(postResponse({ ...post }));
     }
 
-    res.status(200).send({ message: 'success', data: resp });
+    res.status(200).send({ message: 'success', posts: resp });
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send({ message: error.message });
