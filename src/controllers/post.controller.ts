@@ -10,7 +10,6 @@ import {
   IPostFull,
 } from '../interfaces/post.interface';
 import { IRequest } from '../interfaces/response.interface';
-import { CustomRequest } from '../middlewares/auth';
 
 const getPosts = async (req: Request, res: Response) => {
   try {

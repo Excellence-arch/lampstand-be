@@ -4,7 +4,6 @@ import { model } from 'mongoose';
 import { LikeDocument, likeSchema } from './comment.model';
 
 export interface PostDocument extends Document {
-  _id: Schema.Types.ObjectId;
   title: string;
   body: string;
   contentType: ContentType;
@@ -15,7 +14,6 @@ export interface PostDocument extends Document {
 
 const postSchema = new Schema<PostDocument>(
   {
-    _id: { type: Schema.Types.ObjectId },
     title: { required: true, type: String },
     body: { required: true, type: String },
     contentType: {
