@@ -32,7 +32,12 @@ const AccountSchema = new Schema<AccountDocument>(
     password: { type: String, required: true },
     username: { type: String, unique: false },
     verified: { type: Boolean, default: false, required: false },
-    avatar: { type: String, default: 'hey', required: false },
+    avatar: {
+      type: String,
+      default:
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fdefault-avatar&psig=AOvVaw2YzInNXECqLHH5s78nJbjy&ust=1731618387889000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLjo26qb2okDFQAAAAAdAAAAABAE',
+      required: false,
+    },
     active: { type: Boolean, default: true },
   },
   { timestamps: true }
