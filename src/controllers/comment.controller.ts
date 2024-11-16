@@ -10,11 +10,12 @@ const getCommentById = async (req: Request, res: Response) => {
     const comments = await Comment.findById(_id).populate('likes post');
     res.status(200).send({ message: `success`, data: comments });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -26,11 +27,12 @@ const makeComment = async (req: IRequest, res: Response) => {
     await newComment.save();
     res.status(201).send({ message: `success` });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -40,11 +42,12 @@ const deleteComment = async (req: Request, res: Response) => {
     await Comment.findByIdAndDelete(_id);
     res.status(201).send({ message: `success` });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -64,11 +67,12 @@ const likePost = async (req: IRequest, res: Response) => {
     }
     res.status(201).send({ message: `success` });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -84,11 +88,12 @@ const unlikePost = async (req: IRequest, res: Response) => {
     }
     res.status(201).send({ message: `success` });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 

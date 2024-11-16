@@ -15,6 +15,8 @@ export interface IPost {
   user: userData;
   comments: Schema.Types.ObjectId[];
   likes: ILike[];
+  category: string[];
+  slug: string;
 }
 
 export interface IPostDoc {
@@ -25,6 +27,8 @@ export interface IPostDoc {
   user: userData;
   likes: ILike[];
   comments: Schema.Types.ObjectId[];
+  category: string[];
+  slug: string;
 }
 
 export interface IPostFull {
@@ -35,6 +39,8 @@ export interface IPostFull {
   user: userData;
   likes: ILike[];
   comments: IComment[];
+  category: string[];
+  slug: string;
 }
 
 export interface ILike {

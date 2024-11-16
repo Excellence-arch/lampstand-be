@@ -10,6 +10,7 @@ import {
   IPostFull,
 } from '../interfaces/post.interface';
 import { IRequest } from '../interfaces/response.interface';
+import generateUniqueSlug from '../utils/slugify';
 
 const getPosts = async (req: Request, res: Response) => {
   try {
@@ -33,11 +34,9 @@ const getPosts = async (req: Request, res: Response) => {
 
     res.status(200).send({ message: 'success', posts });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
   }
 };
 
@@ -49,11 +48,9 @@ const getUserPosts = async (req: IRequest, res: Response) => {
       .select('-user.password');
     res.status(200).send({ message: 'success', data: posts });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
   }
 };
 
@@ -70,32 +67,58 @@ const getPostById = async (req: Request, res: Response) => {
       res.status(401).send({ message: `Post not found` });
     }
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
+  }
+};
+
+const getPostByTitle = async (req: Request, res: Response) => {
+  try {
+    const { slug } = req.params;
+    const post = await Post.findOne({ slug })
+      .populate('user likes')
+      .select('-user.password'); // Adjust population and field exclusion as necessary
+
+    if (post) {
+      res.status(200).send({ message: 'success', data: post });
     } else {
-      res.status(500).send({ message: `Internal Server Error` });
+      res.status(404).send({ message: `Post not found` });
     }
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
 const createPost = async (req: IRequest, res: Response) => {
   try {
     const { title, body, contentType } = req.body;
+    const slug = generateUniqueSlug(title);
     const newPost = new Post({
       title,
       body,
       contentType,
+      slug,
       user: req.user.userId,
     });
     await newPost.save();
     res.status(201).send({ message: 'success' });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
-export { getPosts, getPostById, createPost, getUserPosts };
+export { getPosts, getPostById, createPost, getUserPosts, getPostByTitle };

@@ -10,6 +10,8 @@ export interface PostDocument extends Document {
   user: Schema.Types.ObjectId;
   comments: Schema.Types.ObjectId;
   likes: LikeDocument[];
+  category: string[];
+  slug: string
 }
 
 const postSchema = new Schema<PostDocument>(
@@ -25,6 +27,8 @@ const postSchema = new Schema<PostDocument>(
     user: { type: Schema.Types.ObjectId, ref: 'Account' },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     likes: [likeSchema],
+    category: [{ type: String }],
+    slug: { type: String, uniques: true, required: true },
   },
   { timestamps: true }
 );

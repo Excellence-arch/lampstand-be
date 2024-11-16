@@ -7,11 +7,12 @@ const getAllUsers = async (req: Request, res: Response) => {
     const users: userData[] = await Account.find().select('-password');
     res.status(200).send({ message: `success`, data: users });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -23,11 +24,12 @@ const getUser = async (req: Request, res: Response) => {
       .populate('posts comments likes');
     res.status(200).send({ message: 'success', data: user });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -39,11 +41,12 @@ const banUser = async (req: Request, res: Response) => {
     await user?.save();
     res.status(200).send({ message: 'success', data: user });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 

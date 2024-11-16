@@ -18,11 +18,12 @@ const register = async (req: Request, res: Response) => {
     await newUser.save();
     res.status(201).send({ message: `success` });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -53,11 +54,12 @@ const login = async (req: Request, res: Response) => {
       }
     }
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
@@ -69,11 +71,12 @@ const getProfile = async (req: CustomRequest, res: Response) => {
     );
     res.status(200).send({ message: `success`, user });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).send({ message: error.message });
-    } else {
-      res.status(500).send({ message: `Internal Server Error` });
-    }
+    res
+      .status(500)
+      .send({
+        message:
+          error instanceof Error ? error.message : `Internal Server Error`,
+      });
   }
 };
 
