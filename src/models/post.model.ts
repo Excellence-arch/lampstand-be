@@ -28,7 +28,7 @@ const postSchema = new Schema<PostDocument>(
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     likes: [likeSchema],
     category: [{ type: String }],
-    slug: { type: String, uniques: true, required: true },
+    slug: { type: String, unique: true, required: true },
   },
   { timestamps: true }
 );

@@ -8,7 +8,7 @@ async function generateUniqueSlug(title: string) {
   let counter = 1;
 
   // Check the database for an existing slug
-  while (await Post.findOne({ where: { slug: uniqueSlug } })) {
+  while (await Post.findOne({ slug: uniqueSlug })) {
     uniqueSlug = `${baseSlug}-${counter}`;
     counter++;
   }

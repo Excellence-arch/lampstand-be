@@ -10,7 +10,7 @@ export interface LikeDocument {
 export const likeSchema = new Schema<LikeDocument>({
   post: { type: Schema.Types.ObjectId, ref: 'Post' },
   // comment: { type: Schema.Types.ObjectId, ref: 'Comment' },
-  user: { type: Schema.Types.ObjectId, ref: 'Account', unique: true },
+  user: { type: Schema.Types.ObjectId, ref: 'Account' },
 });
 
 export interface CommentDocument extends Document {

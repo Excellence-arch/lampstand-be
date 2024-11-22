@@ -101,7 +101,7 @@ const getPostByTitle = async (req: Request, res: Response) => {
 const createPost = async (req: IRequest, res: Response) => {
   try {
     const { title, body, contentType } = req.body;
-    const slug = generateUniqueSlug(title);
+    const slug = await generateUniqueSlug(title);
     const newPost = new Post({
       title,
       body,

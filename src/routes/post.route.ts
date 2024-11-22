@@ -22,7 +22,7 @@ postRouter.get('/', auth(), getPosts);
 postRouter.get('/user', auth(), (req, res) =>
   getUserPosts(req as IRequest, res)
 );
-postRouter.get('/:id', auth(), getPostById);
+// postRouter.get('/:id', auth(), getPostById);
 postRouter.get('/:slug', auth(), getPostByTitle);
 postRouter.post('/create-post', auth([AccountRole.USER]), (req, res) =>
   createPost(req as IRequest, res)
