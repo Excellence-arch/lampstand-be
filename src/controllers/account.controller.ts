@@ -18,12 +18,9 @@ const register = async (req: Request, res: Response) => {
     await newUser.save();
     res.status(201).send({ message: `success` });
   } catch (error: unknown) {
-    res
-      .status(500)
-      .send({
-        message:
-          error instanceof Error ? error.message : `Internal Server Error`,
-      });
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
   }
 };
 
@@ -54,12 +51,9 @@ const login = async (req: Request, res: Response) => {
       }
     }
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        message:
-          error instanceof Error ? error.message : `Internal Server Error`,
-      });
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
   }
 };
 
@@ -71,13 +65,21 @@ const getProfile = async (req: CustomRequest, res: Response) => {
     );
     res.status(200).send({ message: `success`, user });
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        message:
-          error instanceof Error ? error.message : `Internal Server Error`,
-      });
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
   }
 };
 
-export { login, register, getProfile };
+const deleteAccount = async (req: CustomRequest, res: Response) => {
+  try {
+    await Account.findByIdAndDelete(req.user?.userId);
+    res.status(200).send({ message: `success` });
+  } catch (error) {
+    res.status(500).send({
+      message: error instanceof Error ? error.message : `Internal Server Error`,
+    });
+  }
+};
+
+export { login, register, getProfile, deleteAccount };
