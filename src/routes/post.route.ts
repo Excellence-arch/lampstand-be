@@ -18,12 +18,12 @@ import { IRequest } from '../interfaces/response.interface';
 
 const postRouter = express.Router();
 
-postRouter.get('/', auth(), getPosts);
+postRouter.get('/', getPosts);
 postRouter.get('/user', auth(), (req, res) =>
   getUserPosts(req as IRequest, res)
 );
 // postRouter.get('/:id', auth(), getPostById);
-postRouter.get('/:slug', auth(), getPostByTitle);
+postRouter.get('/:slug', getPostByTitle);
 postRouter.post('/create-post', auth([AccountRole.USER]), (req, res) =>
   createPost(req as IRequest, res)
 );
